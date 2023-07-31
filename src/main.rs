@@ -21,18 +21,10 @@ enum SubCommand {
 
 fn main() {
     let args: &SubCommand = &Cli::parse().subcommand;
-    let bits: &String = match args {
-        SubCommand::Encode(sub) => &sub.bits,
-        SubCommand::Decode(sub) => &sub.bits,
+    match args {
+        SubCommand::Encode(sub) =>
+            println!("{}", hamingifyer::encode(&sub.bits)),
+        SubCommand::Decode(sub) =>
+            println!("{}", hamingifyer::decode(&sub.bits)),
     };
-    let should_encode: bool = match args {
-        SubCommand::Encode(_) => true,
-        SubCommand::Decode(_) => false,
-    };
-
-    if should_encode {
-        println!("{}", hamingifyer::encode(bits))
-    } else {
-        println!("{}", hamingifyer::decode(bits))
-    }
 }
